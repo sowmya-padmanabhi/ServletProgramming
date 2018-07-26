@@ -1,0 +1,12 @@
+<web-app>
+ <servlet>
+ 	 <servlet-name>pservlet</servlet-name>
+ 	 <servlet-class>PostServlet</servlet-class>
+ </servlet>
+
+ <servlet-mapping>
+ 	 <servlet-name>pservlet</servlet-name>
+ 	 <url-pattern>/ps</url-pattern>
+ </servlet-mapping>
+
+</web-app>
