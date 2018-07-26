@@ -4,8 +4,6 @@ import java.io.*;
 import java.util.*;
 import org.json.*;
 import com.oracle.tools.packager.Log;
-import java.util.HashMap;
-import java.util.Map;
 public class PostServlet extends HttpServlet
 {
  public void doPost(HttpServletRequest req,HttpServletResponse res) throws ServletException,IOException
