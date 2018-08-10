@@ -11,12 +11,12 @@ public class PostServlet extends HttpServlet
  public void doPost(HttpServletRequest req,HttpServletResponse res) throws ServletException,IOException
  {
     String user=req.getParameter("uname");
-    String password=req.getParameter("pass");
+    String occupation=req.getParameter("pass");
     
     PrintWriter pw=res.getWriter();
 
      pw.println(" Welcome "+user+"");
-     pw.println(" Your  Password is "+password+""); 
+     pw.println(" Your  occupation is "+occupation+""); 
      
     try {
       File file = new File("file1.json");
@@ -29,7 +29,7 @@ public class PostServlet extends HttpServlet
         JSONObject mainObj = new JSONObject(st);
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("user",user);
-        jsonObj.put("password",password);
+        jsonObj.put("occupation",occupation);
         JSONArray jsonArr = new JSONArray();
         jsonArr.put(jsonObj);
         mainObj.accumulate("details",jsonObj);
@@ -43,7 +43,7 @@ public class PostServlet extends HttpServlet
         JSONObject main = new JSONObject();
         JSONObject obj = new JSONObject();
         obj.put("user",user);
-        obj.put("password",password);
+        obj.put("occupation",occupation);
         main.put("details",obj);
         pw.println("writing to file....");
         FileWriter fileW = new FileWriter("file1.json");
