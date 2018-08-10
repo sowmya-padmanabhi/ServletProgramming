@@ -1,26 +1,10 @@
 import javax.servlet.http.*;
 import javax.servlet.*;
 import java.io.*;
-import java.util.*;
-// import java.io.FileOutputStream;
-// import java.io.IOException;
-// import java.io.InputStream;
-// import java.io.OutputStream;
-// import java.io.PrintWriter;
-// import javax.servlet.ServletException;
-// import javax.servlet.http.HttpServlet;
-// import javax.servlet.http.HttpServletRequest;
-// import javax.servlet.http.HttpServletResponse;
-// import org.json.JSONObject;
-// import org.json.JSONArray;
-import org.json.*;
-import com.oracle.tools.packager.Log;
+import java.util.Iterator;
 
-// import java.io.FileWriter;
-// import org.json.JSONException;
-// import java.util.HashMap;
-// import java.util.Map;
-//import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+import org.json.JSONArray;
+import org.json.*;
 
 public class PostServlet extends HttpServlet
 {
@@ -31,33 +15,45 @@ public class PostServlet extends HttpServlet
     
     PrintWriter pw=res.getWriter();
 
-     pw.println("\nWelcome "+user+"");
-
-     pw.println("\nYour  Password is "+password+"");
-     pw.println("\n");
-     pw.println("\nJSON file successfully created. ");
-
-     try{
-        
+     pw.println(" Welcome "+user+"");
+     pw.println(" Your  Password is "+password+""); 
+     
+    try {
+      File file = new File("file1.json");
+      BufferedReader br = new BufferedReader(new FileReader(file));
+      String st = "" ;
+      String jsonStr = "";
+      if ((st = br.readLine()) != null) {
+        jsonStr.concat(st);
+        String jsonData =st;
+        JSONObject mainObj = new JSONObject(st);
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("user",user);
+        jsonObj.put("password",password);
+        JSONArray jsonArr = new JSONArray();
+        jsonArr.put(jsonObj);
+        mainObj.accumulate("details",jsonObj);
+        pw.println(" writing to file..");
+        FileWriter fileWriter = new FileWriter("file1.json");
+        fileWriter.write(mainObj.toString());
+        fileWriter.flush();
+        pw.println(" Successfully copied data to file");
+      }
+      else{
+        JSONObject main = new JSONObject();
         JSONObject obj = new JSONObject();
         obj.put("user",user);
         obj.put("password",password);
-
-        FileWriter fileWriter = new FileWriter("/Users/sowmpadm/Desktop/TestJSON/"+user+".json",true);
-        String filepath = "/Users/sowmpadm/Desktop/TestJSON/"+user+".json";
-        fileWriter.write(obj.toString());
-        fileWriter.flush();
-
-        pw.println("\nSuccessfully copied data to file");
-        pw.println(filepath);
-        pw.println("\n");
-        pw.println(obj);
-
-    } 
-    catch(Exception e){
-        e.printStackTrace();
-    }  
-
+        main.put("details",obj);
+        pw.println("writing to file....");
+        FileWriter fileW = new FileWriter("file1.json");
+        fileW.write(main.toString());
+        fileW.flush();
+        pw.println(" Successfully written into empty file..");
+      }
     }
- 
+      catch(Exception e){
+        e.printStackTrace();
+      }
+    }
 }
